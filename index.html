@@ -1218,23 +1218,49 @@
 
     // Certificate modal logic
     function openCert(src){
-      const modal = document.getElementById('certModal');
-      const img = document.getElementById('certImage');
-      img.src = src;
-      modal.style.display = 'flex';
-    }
+  const modal = document.getElementById('certModal');
+  const img = document.getElementById('certImage');
+  img.src = src;
+  modal.style.display = 'flex';
 
-    function closeCert(){
-      const modal = document.getElementById('certModal');
-      modal.style.display = 'none';
-      document.getElementById('certImage').src = "";
-    }
+  // Save state for mobile back button
+  history.pushState({modalOpen: true}, "");
+}
 
-    document.getElementById('certModal').addEventListener('click', function(e){
-      if(e.target === this){
-        closeCert();
-      }
-    });
+// Close certificate modal
+function closeCert(){
+  const modal = document.getElementById('certModal');
+  modal.style.display = 'none';
+  document.getElementById('certImage').src = "";
+
+  // Go back a step if history was added
+  if (history.state && history.state.modalOpen) {
+    history.back();
+  }
+}
+
+// Clicking outside image closes modal
+document.getElementById('certModal').addEventListener('click', function(e){
+  if(e.target === this){
+    closeCert();
+  }
+});
+
+// ESC key closes certificate modal
+document.addEventListener('keydown', function(e){
+  if (e.key === "Escape") {
+    const modal = document.getElementById('certModal');
+    if (modal.style.display === 'flex') closeCert();
+  }
+});
+
+// Handle mobile BACK button
+window.addEventListener('popstate', function(e) {
+  const modal = document.getElementById('certModal');
+  if (modal.style.display === 'flex') {
+    closeCert();
+  }
+});
 
     // Google Drive video modal logic
     function openDriveVideo(id){
