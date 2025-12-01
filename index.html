@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio | Manoj Somanna</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* VIDEO MODAL - BIG FRAME */
+#videoModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.video-container {
+  position: relative;
+  width: 90vw;          /* LARGE WIDTH */
+  height: 80vh;         /* LARGE HEIGHT */
+  max-width: 1200px;
+  max-height: 750px;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.9);
+}
+
+#demoVideo {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: -45px;
+  right: 0;
+  font-size: 35px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+
+    /* ========= GLOBAL ========= */
+    :root{
+      --bg:#050816;
+      --bg-alt:#0f1224;
+      --text:#ffffff;
+      --muted:#a4a6b3;
+      --accent:#ff7b54;
+      --accent-soft:rgba(255,123,84,0.12);
+      --border:rgba(255,255,255,0.12);
+      --radius-lg:18px;
+      --radius-pill:999px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Poppins',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      background:radial-gradient(circle at top,#1a1f3d,var(--bg));
+      color:var(--text);
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
+    img{max-width:100%;display:block}
+
+    /* ========= NAVBAR ========= */
+    header{
+      position:fixed;
+      top:0;left:0;width:100%;
+      z-index:100;
+      background:rgba(0,0,0,0.45);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0.9rem 1.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:0.45rem;
+      font-weight:700;
+      letter-spacing:0.04em;
+    }
+    .logo-dot{
+      width:26px;height:26px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#ffb26b,#ff7b54);
+      box-shadow:0 0 14px rgba(255,123,84,0.9);
+    }
+    .logo span{color:#ff5e5e}
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:2rem;
+      font-size:0.95rem;
+    }
+    nav a{
+      text-decoration:none;
+      color:#f5f5f5;
+      position:relative;
+      padding-bottom:2px;
+      transition:color .25s ease-out;
+    }
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:0;
+      width:0;height:2px;
+      background:var(--accent);
+      transition:width .25s ease-out;
+    }
+    nav a:hover,
+    nav a.active{
+      color:#ffe1cc;
+    }
+    nav a:hover::after,
+    nav a.active::after{
+      width:100%;
+    }
+    .nav-cta{
+      padding:0.55rem 1.25rem;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(255,123,84,0.7);
+      background:linear-gradient(135deg,#ff7b54,#ffb26b);
+      color:#1b0c06;
+      font-size:0.9rem;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 10px 25px rgba(255,123,84,0.35);
+      transition:.25s ease-out;
+    }
+    .nav-cta:hover{
+      filter:brightness(1.05);
+      box-shadow:0 14px 32px rgba(255,123,84,0.55);
+      transform:translateY(-1px);
+    }
+
+    /* ========= LAYOUT ========= */
+    main{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 1.5rem 3rem;
+    }
+    section{
+      padding:4.2rem 0 0;
+    }
+    .section-heading{
+      margin-bottom:1.7rem;
+    }
+    .kicker{
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      font-size:0.78rem;
+      color:var(--accent);
+      font-weight:600;
+    }
+    .title{
+      font-size:2rem;
+      margin-top:0.35rem;
+    }
+    .subtitle{
+      font-size:0.94rem;
+      color:var(--muted);
+      max-width:640px;
+    }
+
+    /* ========= HERO ========= */
+    .hero-wrapper{
+      padding-top:85px;
+    }
+    .hero{
+      position:relative;
+      min-height:80vh;
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);
+      margin-top:1.4rem;
+    }
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      background:url('hero.jpg') center/cover no-repeat;
+      filter:brightness(0.45);
+      transform:scale(1.03);
+    }
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg,rgba(0,0,0,0.7),rgba(0,0,0,0.35),rgba(0,0,0,0.9));
+    }
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      height:100%;
+      padding:3.5rem 3rem;
+      display:grid;
+      grid-template-columns:minmax(0,2.1fr) minmax(0,1.1fr);
+      gap:2.5rem;
+      align-items:center;
+    }
+    .hero-eyebrow{
+      font-size:1.1rem;
+      font-weight:600;
+      color:#ffd0b8;
+    }
+    .hero-title{
+      font-size:3rem;
+      line-height:1.15;
+      margin-top:0.4rem;
+      margin-bottom:0.7rem;
+    }
+    .hero-title span{
+      color:#ffb26b;
+    }
+    .hero-tagline{
+      font-size:0.98rem;
+      max-width:480px;
+      color:#f0f0f0;
+      margin-bottom:1.5rem;
+    }
+    .hero-meta{
+      font-size:0.85rem;
+      color:var(--muted);
+      margin-bottom:1.9rem;
+    }
+    .hero-meta span{
+      color:#ffe0b5;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.9rem;
+      align-items:center;
+    }
+    .btn-primary{
+      border-radius:var(--radius-pill);
+      padding:0.75rem 1.6rem;
+      border:1px solid rgba(255,123,84,0.8);
+      background:var(--accent-soft);
+      color:#ffeade;
+      font-size:0.9rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:.25s ease-out;
+    }
+    .btn-primary:hover{
+      background:var(--accent);
+      color:#1b0c06;
+      box-shadow:0 12px 26px rgba(255,123,84,0.6);
+      transform:translateY(-1px);
+    }
+    .btn-ghost{
+      border-radius:var(--radius-pill);
+      padding:0.7rem 1.4rem;
+      border:1px solid rgba(255,255,255,0.35);
+      background:rgba(10,12,30,0.6);
+      font-size:0.88rem;
+      cursor:pointer;
+      color:#f5f5f5;
+      text-decoration:none;
+      transition:.25s ease-out;
+    }
+    .btn-ghost:hover{
+      background:rgba(255,255,255,0.08);
+      border-color:#ffffff;
+      transform:translateY(-1px);
+    }
+    .hero-email{
+      font-size:0.88rem;
+      color:#ffe4d5;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .hero-profile{
+      justify-self:center;
+    }
+    .profile-panel{
+      background:rgba(10,12,30,0.9);
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,0.08);
+      padding:1.4rem 1.3rem 1.4rem;
+      position:relative;
+      max-width:330px;
+    }
+    .profile-photo-wrap{
+      width:92px;height:92px;
+      border-radius:50%;
+      border:3px solid rgba(255,178,107,0.9);
+      padding:3px;
+      margin-bottom:0.6rem;
+    }
+    .profile-photo{
+      width:100%;height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      background:#222;
+    }
+    .profile-name{
+      font-size:1.1rem;
+      font-weight:600;
+    }
+    .profile-role{
+      font-size:0.86rem;
+      color:var(--muted);
+      margin-bottom:0.7rem;
+    }
+    .profile-row{
+      display:flex;
+      justify-content:space-between;
+      font-size:0.78rem;
+      color:var(--muted);
+      margin-bottom:0.25rem;
+    }
+    .profile-row span{
+      color:#ffe0b5;
+    }
+    .profile-status{
+      margin-top:0.7rem;
+      display:flex;
+      align-items:center;
+      gap:0.35rem;
+      font-size:0.8rem;
+      color:#aaffc6;
+    }
+    .status-dot{
+      width:8px;height:8px;
+      border-radius:50%;
+      background:#3cff9b;
+      box-shadow:0 0 8px rgba(60,255,155,0.9);
+    }
+
+    /* ========= ABOUT ========= */
+    .about-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.8fr) minmax(0,1.2fr);
+      gap:1.8rem;
+      margin-top:0.8rem;
+    }
+    .card{
+      background:var(--bg-alt);
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border);
+      padding:1.3rem 1.4rem;
+      font-size:0.93rem;
+      color:var(--muted);
+    }
+    .card strong{color:#ffe0b5;}
+
+    /* ========= SKILLS ========= */
+    .skills-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1rem;
+      margin-top:0.9rem;
+    }
+    .skill-card{
+      background:var(--bg-alt);
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border);
+      padding:1.1rem 1.2rem;
+      font-size:0.88rem;
+    }
+    .skill-card h3{
+      font-size:0.96rem;
+      margin-bottom:0.55rem;
+    }
+    .skill-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.3rem;
+    }
+    .skill-tag{
+      font-size:0.76rem;
+      padding:0.25rem 0.6rem;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.03);
+    }
+
+    /* ========= PROJECTS & CERTIFICATES GRID (3x3) ========= */
+    .projects-grid,
+    .cert-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:1.2rem;
+      margin-top:1.2rem;
+    }
+
+    /* ========= PROJECTS ========= */
+    .project-card{
+      background:var(--bg-alt);
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border);
+      padding:1.1rem 1.2rem 1.3rem;
+      font-size:0.88rem;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+      transition:.25s ease-out;
+    }
+    .project-card::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:3px;
+      background:linear-gradient(90deg,#ff7b54,#ffb26b);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:.25s ease-out;
+    }
+    .project-card:hover::before{transform:scaleX(1);}
+    .project-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 40px rgba(0,0,0,0.7);
+      border-color:rgba(255,178,107,0.75);
+    }
+    .project-thumb{
+      width:100%;
+      height:200px;
+      object-fit:contain;
+      background:#0b0e1f;
+      padding:8px;
+      border-radius:12px;
+      margin-bottom:0.75rem;
+    }
+    .project-pill{
+      font-size:0.75rem;
+      padding:0.2rem 0.65rem;
+      border-radius:var(--radius-pill);
+      border:1px solid rgba(255,255,255,0.12);
+      color:var(--muted);
+      display:inline-flex;
+      align-items:center;
+      gap:0.35rem;
+      margin-bottom:0.55rem;
+    }
+    .project-pill span{
+      width:7px;height:7px;border-radius:50%;background:#ffb26b;
+    }
+    .project-title{
+      font-size:1rem;
+      color:#ffe0b5;
+      margin-bottom:0.3rem;
+    }
+    .project-desc{
+      color:var(--muted);
+      margin-bottom:0.6rem;
+    }
+    .project-tech{
+      font-size:0.78rem;
+      color:#c9c9d7;
+    }
+    .project-btn{
+      margin-top:0.7rem;
+    }
+
+    /* ========= ART GALLERY ========= */
+    .art-grid{
+      margin-top:1.5rem;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:1.3rem;
+    }
+    .art-item{
+      background:var(--bg-alt);
+      border-radius:18px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      cursor:pointer;
+      transition:.3s ease-in-out;
+      box-shadow:0 10px 28px rgba(0,0,0,0.35);
+    }
+    .art-item:hover{
+      transform:translateY(-6px);
+      border-color:#ffb26b;
+      box-shadow:0 18px 50px rgba(255,123,84,0.45);
+    }
+    .art-item img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      display:block;
+      background:#0b0e1f;
+      padding:6px;
+      transition:transform .4s ease;
+    }
+    .art-item:hover img{
+      transform:scale(1.03);
+    }
+    .art-caption{
+      padding:0.9rem;
+      font-size:0.88rem;
+      color:var(--muted);
+      background:rgba(255,255,255,0.03);
+      border-top:1px solid rgba(255,255,255,0.12);
+    }
+    .art-caption strong{
+      color:#ffcb99;
+      font-size:0.92rem;
+      display:block;
+      margin-bottom:2px;
+    }
+
+    /* ========= CERTIFICATES ========= */
+    .cert-card{
+      background:var(--bg-alt);
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border);
+      padding:1rem;
+      text-align:center;
+    }
+    .cert-thumb{
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:0.8rem;
+    }
+    .cert-title{
+      font-size:0.92rem;
+      color:#ffe0b5;
+      margin-bottom:0.4rem;
+    }
+
+    /* ========= MODALS (CERT + DRIVE VIDEO) ========= */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    }
+    .modal-inner{
+      position:relative;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+    .modal-content{
+      max-width:95vw;
+      max-height:95vh;
+      object-fit:contain;
+      border-radius:10px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.8);
+      background:#000;
+    }
+    .close-btn{
+      position:absolute;
+      top:-32px;
+      right:0;
+      font-size:26px;
+      cursor:pointer;
+      color:#ffffff;
+      font-weight:700;
+      padding:4px 8px;
+    }
+
+    /* ========= CONTACT ========= */
+    .contact-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr);
+      gap:1.5rem;
+      margin-top:1rem;
+    }
+    .contact-card{
+      background:var(--bg-alt);
+      border-radius:var(--radius-lg);
+      border:1px solid var(--border);
+      padding:1.2rem 1.3rem;
+      font-size:0.9rem;
+      color:var(--muted);
+    }
+    .contact-item{
+      margin-bottom:0.6rem;
+    }
+    .contact-label{
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--muted);
+    }
+    .contact-value{
+      font-size:0.94rem;
+      color:#ffe0b5;
+    }
+    .contact-form input,
+    .contact-form textarea{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      padding:0.55rem 0.65rem;
+      background:rgba(12,15,38,0.95);
+      color:#f5f5f5;
+      font-family:inherit;
+      font-size:0.86rem;
+      outline:none;
+      transition:.22s ease-out;
+      margin-top:0.25rem;
+    }
+    .contact-form textarea{min-height:120px;resize:vertical;}
+    .contact-form label{
+      font-size:0.82rem;
+      color:var(--muted);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus{
+      border-color:rgba(255,123,84,0.8);
+      box-shadow:0 0 0 1px rgba(255,123,84,0.55);
+    }
+    .contact-note{
+      font-size:0.76rem;
+      color:var(--muted);
+      margin-top:0.4rem;
+    }
+
+    /* ========= FOOTER ========= */
+    footer{
+      border-top:1px solid var(--border);
+      padding:1.2rem;
+      text-align:center;
+      font-size:0.78rem;
+      color:var(--muted);
+    }
+    footer span{color:#ffe0b5;}
+
+    /* ========= RESPONSIVE ========= */
+    @media(max-width:960px){
+      .hero-inner{
+        grid-template-columns:1fr;
+        padding:2.7rem 1.6rem 2.3rem;
+      }
+      .hero-title{font-size:2.3rem;}
+      .hero-wrapper{padding-top:80px;}
+      .about-grid,
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+      .art-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .projects-grid,
+      .cert-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+    @media(max-width:640px){
+      .nav{padding-inline:1rem;}
+      nav ul{display:none;}
+      .hero-inner{padding:2.3rem 1.2rem 2rem;}
+      .hero-title{font-size:2rem;}
+      main{padding-inline:1.1rem;}
+      .art-grid,
+      .projects-grid,
+      .cert-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-dot"></div>
+        Manoj Somanna<span>.</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+          <li><a href="#art">Art</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="nav-cta" onclick="scrollToSection('contact')">Hire Me</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====== HERO ====== -->
+    <div class="hero-wrapper" id="hero">
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-inner">
+          <div>
+            <div class="hero-eyebrow">Hello</div>
+            <h1 class="hero-title">I'm <span>Manoj Somanna</span><br>Software Developer & AI Enthusiast</h1>
+            <p class="hero-tagline">
+              MCA graduate specializing in AI/ML, computer vision and full-stack web development.
+              I design and build intelligent, scalable solutions that transform real-world data into
+              meaningful insights.
+            </p>
+            <p class="hero-meta">
+              Currently working with <span>YOLO, CNNs, Django, and ML pipelines</span> to create
+              data-driven applications and smart monitoring systems.
+            </p>
+            <div class="hero-actions">
+              <button class="btn-primary" onclick="scrollToSection('projects')">View My Work</button>
+              <a href="#art" class="btn-ghost">View My Art</a>
+              <a href="mailto:manoj9901811@gmail.com" class="hero-email">manoj9901811@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="hero-profile">
+            <div class="profile-panel">
+              <div class="profile-photo-wrap">
+                <img src="profile.jpeg" alt="Profile photo of Manoj Somanna" class="profile-photo">
+              </div>
+              <div class="profile-name">Manoj Somanna</div>
+              <div class="profile-role">MCA Graduate • Software Developer</div>
+
+              <div class="profile-row">
+                <div>Location</div>
+                <div><span>Bengaluru, India</span></div>
+              </div>
+              <div class="profile-row">
+                <div>Specialization</div>
+                <div><span>Software Developer, AI/ML</span></div>
+              </div>
+              <div class="profile-row">
+                <div>Education</div>
+                <div><span>MCA @ AMC Engg. College</span></div>
+              </div>
+
+              <div class="profile-status">
+                <span class="status-dot"></span>
+                Open to Software / AI Engineer roles
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ====== ABOUT ====== -->
+    <section id="about">
+      <div class="section-heading">
+        <div class="kicker">About Me</div>
+        <h2 class="title">Who I Am</h2>
+        <p class="subtitle">
+          A motivated software developer with a strong academic record and practical experience
+          in AI, machine learning, and full-stack development. I enjoy combining analytical thinking
+          with creativity — both in code and art.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <article class="card">
+          <p>
+            I have completed my <strong>Master of Computer Applications (MCA)</strong> from
+            AMC Engineering College (VTU) with an aggregate of <strong>90%</strong>.
+            During my internship at <strong>TechCiti Software Consulting Pvt. Ltd.</strong>,
+            I worked as a Software Developer in the data science domain, building and deploying
+            data-driven applications using Python, Django, Pandas, and Scikit-Learn.
+          </p>
+          <br>
+          <p>
+            My interests include <strong>computer vision</strong>, <strong>intelligent monitoring systems</strong>,
+            and <strong>AI-assisted automation</strong>. Alongside software development, I’m also an artist;
+            this helps me design cleaner interfaces, better visualizations, and more human-centered products.
+          </p>
+        </article>
+
+        <article class="card">
+          <strong>Highlights</strong><br><br>
+          • Internship experience as Software Developer (Data Science) at TechCiti<br>
+          • Research & project work on YOLO-based cross-modal threat monitoring<br>
+          • Strong understanding of ML workflows, model training, and deployment<br>
+          • Comfortable working across frontend, backend, and database layers<br>
+          • Passionate about building impactful, socially relevant applications
+        </article>
+      </div>
+    </section>
+
+    <!-- ====== SKILLS ====== -->
+    <section id="skills">
+      <div class="section-heading">
+        <div class="kicker">Skills</div>
+        <h2 class="title">Tech Stack & Capabilities</h2>
+        <p class="subtitle">
+          A combination of programming, AI, web technologies, and soft skills that I use to
+          deliver robust, maintainable, and user-focused solutions.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+        <article class="skill-card">
+          <h3>Programming Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">C++</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <h3>Web & Frameworks</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Django</span>
+            <span class="skill-tag">REST APIs</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <h3>AI & Data</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Machine Learning</span>
+            <span class="skill-tag">YOLO</span>
+            <span class="skill-tag">CNN</span>
+            <span class="skill-tag">Scikit-Learn</span>
+            <span class="skill-tag">Pandas / NumPy</span>
+          </div>
+        </article>
+
+        <article class="skill-card">
+          <h3>Databases & Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">SQLite</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">VS Code</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====== PROJECTS ====== -->
+    <section id="projects">
+      <div class="section-heading">
+        <div class="kicker">Projects</div>
+        <h2 class="title">Selected Projects</h2>
+        <p class="subtitle">
+          A snapshot of the work I’ve done across AI, web development, and intelligent monitoring systems.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: YOLO -->
+        <article class="project-card">
+          <img src="project-yolo.png" alt="YOLO Monitoring Project" class="project-thumb">
+          <div class="project-pill"><span></span>AI • Computer Vision</div>
+          <h3 class="project-title">YOLO-Infused Cross-Modal Monitoring</h3>
+          <p class="project-desc">
+            A future-threat anticipation system using YOLO, CNN and SORT to track and analyze
+            objects in real time. Focused on situational awareness and proactive risk detection.
+          </p>
+          <p class="project-tech">
+            Tech: YOLO, OpenCV, CNN, SORT, Python, SQL
+          </p>
+          <!-- Replace DRIVE_ID_YOLO with your real Drive ID -->
+          <button class="btn-primary project-btn"
+                  onclick="openDriveVideo('DRIVE_ID_YOLO')">
+            View Demo
+          </button>
+        </article>
+
+        <!-- Project 2: Crop Recommendation -->
+        <article class="project-card">
+          <img src="project-crop.png" alt="Crop Recommendation Project" class="project-thumb">
+          <div class="project-pill"><span></span>ML • Web</div>
+          <h3 class="project-title">Crop & Fertilizer Recommendation</h3>
+          <p class="project-desc">
+            ML-powered recommendation system that suggests crops and fertilizers based on soil,
+            weather, and environmental parameters, delivered through a web interface.
+          </p>
+          <p class="project-tech">
+            Tech: Python, Django, HTML/CSS/JS, Scikit-Learn
+          </p>
+          <!-- Replace DRIVE_ID_CROP with your real Drive ID -->
+          <button class="btn-primary project-btn"
+                  onclick="openDriveVideo('DRIVE_ID_CROP')">
+            View Demo
+          </button>
+        </article>
+
+        <!-- Project 3: Traffic & Accident Prediction (WITH YOUR DRIVE LINK) -->
+        <article class="project-card">
+          <img src="project-traffic.png" alt="Traffic & Accident Prediction" class="project-thumb">
+          <div class="project-pill"><span></span>Predictive Analytics</div>
+          <h3 class="project-title">Traffic & Accident Prediction</h3>
+          <p class="project-desc">
+            Predictive analytics platform to forecast traffic density and accident risk over time,
+            complete with dashboards, charts, and history tracking.
+          </p>
+          <p class="project-tech">
+            Tech: ML Models, Python, Django/Flask, SQLite, Visualization
+          </p>
+          <!-- This uses your provided Drive file ID -->
+          <button class="btn-primary project-btn"
+                  onclick="openDriveVideo('traffic')">
+            View Demo
+          </button>
+        </article>
+
+        <!-- Project 4: AI Image Generator -->
+        <article class="project-card">
+          <img src="project-ai-image.png" alt="AI Image Generator" class="project-thumb">
+          <div class="project-pill"><span></span>Full-Stack</div>
+          <h3 class="project-title">AI Image Generator</h3>
+          <p class="project-desc">
+            A MERN-based application integrated with Cloudinary for managing and generating AI-driven
+            images, including user galleries and secure storage.
+          </p>
+          <p class="project-tech">
+            Tech: MongoDB, Express, React, Node.js, Cloudinary API
+          </p>
+          <!-- Replace DRIVE_ID_AI_IMAGE with your real Drive ID -->
+          <button class="btn-primary project-btn"
+                  onclick="openDriveVideo('DRIVE_ID_AI_IMAGE')">
+            View Demo
+          </button>
+        </article>
+
+        <!-- You can add up to 9 project cards for a full 3x3 layout -->
+      </div>
+    </section>
+
+    <!-- ====== CERTIFICATES ====== -->
+    <section id="certificates">
+      <div class="section-heading">
+        <div class="kicker">Certificates</div>
+        <h2 class="title">My Certifications</h2>
+        <p class="subtitle">
+          Recognitions and certifications that validate my skills in software development,
+          AI/ML, and related technologies.
+        </p>
+      </div>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <img src="cert1.jpg" alt="Paper Publication" class="cert-thumb">
+          <h3 class="cert-title">YOLO-Infused Cross-Modal Monitoring for Future Threat Anticipation and Situational Awareness</h3>
+          <p class="project-desc">
+            Published in IJMRSET (Impact Factor 8.206), this research integrates YOLO-based AI with cross-modal analytics to enhance real-time threat prediction. Demonstrates innovative AI-driven situational awareness for intelligent security and monitoring applications.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert1.jpg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert2.jpeg" alt="NC Conference" class="cert-thumb">
+          <h3 class="cert-title">Certificate of Appreciation – National Conference NC2IA-2k25</h3>
+          <p class="project-desc">
+            Presented a research paper titled "YOLO-Infused Cross-Modal Monitoring for Future Threat Anticipation and Situational Awareness" at the National Conference on Computation Intelligence and Applications, organized by the Department of MCA, AMC Engineering College.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert2.jpeg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert3.jpeg" alt="AI ML DL Diploma" class="cert-thumb">
+          <h3 class="cert-title">Diploma in Artificial Intelligence, Machine Learning, and Deep Learning</h3>
+          <p class="project-desc">
+            Completed a comprehensive training program focused on AI, ML, and DL at Sivananda Sarma Memorial RV College, with practical implementation under Nanochip Solutions Pvt. Ltd.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert3.jpeg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert4.jpeg" alt="AI & ML Training" class="cert-thumb">
+          <h3 class="cert-title">Advanced AI & ML Training</h3>
+          <p class="project-desc">
+            Recognized by Aqmenz Automation Pvt. Ltd. for outstanding performance in building and deploying an Iris Flower Classification model, showcasing end-to-end ML expertise.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert4.jpeg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert5.jpeg" alt="Backend Bootcamp" class="cert-thumb">
+          <h3 class="cert-title">Backend Web Development Bootcamp</h3>
+          <p class="project-desc">
+            Completed a 7-day intensive bootcamp on backend web development, gaining hands-on experience with Node.js, Express, and server-side application design.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert5.jpeg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert6.jpeg" alt="Microsoft Backend Program" class="cert-thumb">
+          <h3 class="cert-title">Microsoft Learn Student Ambassador – Backend Development</h3>
+          <p class="project-desc">
+            Completed a backend-focused program under the Microsoft Learn Student Ambassador initiative, strengthening skills in APIs, server architecture, and modern backend frameworks.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert6.jpeg')">View Certificate</button>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert7.jpeg" alt="Art Contest" class="cert-thumb">
+          <h3 class="cert-title">National Art Contest Participation</h3>
+          <p class="project-desc">
+            Participated in the Art-Utsav Season-10 National Art Contest organized by Draw More, showcasing creative and artistic skills at a national level.
+          </p>
+          <button class="btn-primary" onclick="openCert('cert7.jpeg')">View Certificate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificate Modal -->
+    <div id="certModal" class="modal">
+      <div class="modal-inner">
+        <span class="close-btn" onclick="closeCert()">✕</span>
+        <img id="certImage" class="modal-content" alt="Certificate preview">
+      </div>
+    </div>
+
+    <!-- Video Demo (Google Drive) Modal -->
+    <!-- FULLSCREEN VIDEO MODAL -->
+<div id="videoModal" class="modal">
+  <div class="video-container">
+    <span class="close-btn" onclick="closeVideo()">✕</span>
+    <iframe id="demoVideo" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>
+
+
+
+    <!-- ====== ART GALLERY (3x3 Grid) ====== -->
+    <section id="art">
+      <div class="section-heading">
+        <div class="kicker">Art & Creativity</div>
+        <h2 class="title">Art Gallery</h2>
+        <p class="subtitle">
+          Art is my second language. Here is a curated collection of my works — portraits,
+          digital illustrations, and concept art.
+        </p>
+      </div>
+
+      <div class="art-grid">
+        <div class="art-item">
+          <img src="art1.jpeg" alt="Art 1">
+          <div class="art-caption">
+            <strong>Pen Art</strong>
+            Pen realism focused on light, shadow, and facial structure.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art2.jpeg" alt="Art 2">
+          <div class="art-caption">
+            <strong>Mandala Art</strong>
+            Stylized character with emphasis on color and expression.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art3.jpeg" alt="Art 3">
+          <div class="art-caption">
+            <strong>Pen Sketch</strong>
+            Atmospheric environment art exploring depth and scale.
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="art4.jpeg" alt="Art 4">
+          <div class="art-caption">
+            <strong>Landscape</strong>
+            Experimenting with shapes, rhythm, and visual balance.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art5.jpeg" alt="Art 5">
+          <div class="art-caption">
+            <strong>Ink Illustration</strong>
+            High-contrast line work and texture exploration.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art6.jpeg" alt="Art 6">
+          <div class="art-caption">
+            <strong>Color Study</strong>
+            Playing with warm and cool color harmony.
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="art7.jpeg" alt="Art 7">
+          <div class="art-caption">
+            <strong>Pen Sketch</strong>
+            Quick sketch capturing motion and atmosphere of the city.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art8.jpeg" alt="Art 8">
+          <div class="art-caption">
+            <strong>Fantasy Concept</strong>
+            World-building through characters and environment.
+          </div>
+        </div>
+        <div class="art-item">
+          <img src="art9.jpeg" alt="Art 9">
+          <div class="art-caption">
+            <strong>Minimal Poster</strong>
+            Graphic design with strong typography and simple shapes.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section id="contact">
+      <div class="section-heading">
+        <div class="kicker">Contact</div>
+        <h2 class="title">Let’s Work Together</h2>
+        <p class="subtitle">
+          I’m open to opportunities in software development, AI/ML, and innovative projects where
+          technology and creativity can make a difference.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <article class="contact-card">
+          <div class="contact-item">
+            <div class="contact-label">Email</div>
+            <div class="contact-value">manoj9901811@gmail.com</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">+91 9901811695</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">linkedin.com/in/manoj-somanna</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">github.com/manoj9901811</div>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <!-- Still front-end only; backend (Django/email) can be wired later -->
+          <form class="contact-form" id="contactForm">
+            <div style="margin-bottom:0.6rem;">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Your Name">
+            </div>
+            <div style="margin-bottom:0.6rem;">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com">
+            </div>
+            <div style="margin-bottom:0.6rem;">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell me about your project, role, or idea..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Message</button>
+            <div class="contact-note">
+              This is a front-end demo form. In production, it can be connected to Django, Flask, or Node backend for real-time emails.
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Manoj Somanna — Designed with Code & Art
+  </footer>
+
+  <script>
+    // Update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll helper
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el){
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    }
+
+    // Simple nav active state on click
+    document.querySelectorAll('header nav a').forEach(link=>{
+      link.addEventListener('click',()=>{
+        document.querySelectorAll('header nav a').forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Dummy contact form handler (front-end only)
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if(!name || !email || !msg){
+        alert("Please fill in Name, Email, and Message before sending.");
+        return;
+      }
+      alert("Thank you, " + name + "! In a real deployment, your message would now be sent to my inbox.");
+      this.reset();
+    });
+
+    // Certificate modal logic
+    function openCert(src){
+      const modal = document.getElementById('certModal');
+      const img = document.getElementById('certImage');
+      img.src = src;
+      modal.style.display = 'flex';
+    }
+
+    function closeCert(){
+      const modal = document.getElementById('certModal');
+      modal.style.display = 'none';
+      document.getElementById('certImage').src = "";
+    }
+
+    document.getElementById('certModal').addEventListener('click', function(e){
+      if(e.target === this){
+        closeCert();
+      }
+    });
+
+    // Google Drive video modal logic
+    function openDriveVideo(id){
+    const links = {
+        "DRIVE_ID_YOLO": "https://drive.google.com/file/d/1lD2Ecu6L0Y0h8vl3E071zXQW3K5ijYAA/preview",
+        "DRIVE_ID_CROP": "https://drive.google.com/file/d/1Hk_CqxcfpgkepsDudCyDIULGFowcN-Of/preview",
+        "traffic": "https://drive.google.com/file/d/1ZE42Mjos4ghXN6yTOLeYOKTw2cQYbjVc/preview"
+    };
+
+    document.getElementById('videoModal').style.display = "flex";
+    document.getElementById('demoVideo').src = links[id];
+}
+
+function closeVideo(){
+    document.getElementById('videoModal').style.display = "none";
+    document.getElementById('demoVideo').src = ""; // stop playback
+}
+
+// Close on clicking outside video
+document.getElementById('videoModal').addEventListener('click', function(e){
+  if(e.target === this){ closeVideo(); }
+});
+  </script>
+</body>
+</html>
