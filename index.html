@@ -8,152 +8,123 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-
-    /* VIDEO MODAL - BIG FRAME */
-#videoModal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.92);
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-}
-
-.video-container {
-  position: relative;
-  width: 90vw;          /* LARGE WIDTH */
-  height: 80vh;         /* LARGE HEIGHT */
-  max-width: 1200px;
-  max-height: 750px;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 40px rgba(0,0,0,0.9);
-}
-
-#demoVideo {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.close-btn {
-  position: absolute;
-  top: -45px;
-  right: 0;
-  font-size: 35px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 10px;
-  font-weight: 700;
-}
-
-    /* ========= GLOBAL ========= */
+    /* ========= GLOBAL THEME ========= */
     :root{
       --bg:#050816;
-      --bg-alt:#0f1224;
+      --bg-alt:#0c1024;
+      --bg-soft:#11152d;
       --text:#ffffff;
-      --muted:#a4a6b3;
+      --muted:#a8afc4;
       --accent:#ff7b54;
-      --accent-soft:rgba(255,123,84,0.12);
+      --accent-soft:rgba(255,123,84,0.14);
       --border:rgba(255,255,255,0.12);
       --radius-lg:18px;
       --radius-pill:999px;
+      --shadow-soft:0 18px 45px rgba(0,0,0,0.65);
     }
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
+    html,body{
       font-family:'Poppins',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      background:radial-gradient(circle at top,#1a1f3d,var(--bg));
+      background:radial-gradient(circle at top,#1c2142 0,#050816 55%);
       color:var(--text);
       line-height:1.6;
       scroll-behavior:smooth;
     }
     img{max-width:100%;display:block}
+    button{font-family:inherit}
 
     /* ========= NAVBAR ========= */
     header{
       position:fixed;
       top:0;left:0;width:100%;
       z-index:100;
-      background:rgba(0,0,0,0.45);
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid var(--border);
+      background:linear-gradient(to bottom,rgba(4,5,15,0.92),rgba(4,5,15,0.7));
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
     }
     .nav{
       max-width:1200px;
       margin:0 auto;
-      padding:0.9rem 1.5rem;
+      padding:0.8rem 1.5rem;
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:1.2rem;
     }
     .logo{
       display:flex;
       align-items:center;
-      gap:0.45rem;
+      gap:0.55rem;
       font-weight:700;
-      letter-spacing:0.04em;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.88rem;
     }
     .logo-dot{
-      width:26px;height:26px;
+      width:28px;height:28px;
       border-radius:50%;
-      background:linear-gradient(135deg,#ffb26b,#ff7b54);
-      box-shadow:0 0 14px rgba(255,123,84,0.9);
+      background:conic-gradient(from 210deg,#ffb26b,#ff7b54,#ff5171,#ffb26b);
+      box-shadow:0 0 18px rgba(255,123,84,0.9);
     }
-    .logo span{color:#ff5e5e}
+    .logo span{color:#ff6363}
+
     nav ul{
       list-style:none;
       display:flex;
-      gap:2rem;
-      font-size:0.95rem;
+      gap:1.6rem;
+      font-size:0.9rem;
     }
     nav a{
       text-decoration:none;
-      color:#f5f5f5;
+      color:#e9e9f5;
       position:relative;
       padding-bottom:2px;
-      transition:color .25s ease-out;
+      transition:color .25s ease-out, opacity .25s ease-out;
+      opacity:0.85;
     }
     nav a::after{
       content:"";
       position:absolute;
       left:0;bottom:0;
       width:0;height:2px;
-      background:var(--accent);
+      border-radius:999px;
+      background:linear-gradient(90deg,#ff7b54,#ffb26b);
       transition:width .25s ease-out;
     }
     nav a:hover,
     nav a.active{
-      color:#ffe1cc;
+      color:#ffffff;
+      opacity:1;
     }
     nav a:hover::after,
     nav a.active::after{
       width:100%;
     }
+
     .nav-cta{
       padding:0.55rem 1.25rem;
       border-radius:var(--radius-pill);
       border:1px solid rgba(255,123,84,0.7);
       background:linear-gradient(135deg,#ff7b54,#ffb26b);
-      color:#1b0c06;
+      color:#200c07;
       font-size:0.9rem;
       font-weight:600;
       cursor:pointer;
-      box-shadow:0 10px 25px rgba(255,123,84,0.35);
-      transition:.25s ease-out;
+      box-shadow:0 10px 26px rgba(255,123,84,0.35);
+      transition:.2s ease-out;
+      white-space:nowrap;
     }
     .nav-cta:hover{
+      transform:translateY(-1px) scale(1.01);
+      box-shadow:0 14px 34px rgba(255,123,84,0.55);
       filter:brightness(1.05);
-      box-shadow:0 14px 32px rgba(255,123,84,0.55);
-      transform:translateY(-1px);
     }
 
     /* ========= LAYOUT ========= */
     main{
       max-width:1200px;
       margin:0 auto;
-      padding:0 1.5rem 3rem;
+      padding:0 1.5rem 3.5rem;
     }
     section{
       padding:4.2rem 0 0;
@@ -180,62 +151,68 @@
 
     /* ========= HERO ========= */
     .hero-wrapper{
-      padding-top:85px;
+      padding-top:88px; /* offset navbar */
     }
     .hero{
       position:relative;
-      min-height:80vh;
-      border-radius:24px;
+      min-height:78vh;
+      border-radius:26px;
       overflow:hidden;
-      box-shadow:0 20px 60px rgba(0,0,0,0.6);
-      margin-top:1.4rem;
+      box-shadow:var(--shadow-soft);
+      margin-top:1.5rem;
+      background:#050816;
     }
     .hero-bg{
       position:absolute;
       inset:0;
       background:url('hero.jpg') center/cover no-repeat;
-      filter:brightness(0.45);
-      transform:scale(1.03);
+      filter:brightness(0.38);
+      transform:scale(1.06);
     }
     .hero-overlay{
       position:absolute;
       inset:0;
-      background:linear-gradient(120deg,rgba(0,0,0,0.7),rgba(0,0,0,0.35),rgba(0,0,0,0.9));
+      background:
+        radial-gradient(circle at 10% 0%,rgba(255,123,84,0.18),transparent 55%),
+        radial-gradient(circle at 80% 0%,rgba(94,234,212,0.18),transparent 55%),
+        linear-gradient(125deg,rgba(5,6,20,0.9) 0,rgba(5,6,20,0.45) 45%,rgba(1,2,8,0.92) 100%);
     }
     .hero-inner{
       position:relative;
       z-index:2;
       height:100%;
-      padding:3.5rem 3rem;
+      padding:3.6rem 3rem 3.2rem;
       display:grid;
       grid-template-columns:minmax(0,2.1fr) minmax(0,1.1fr);
-      gap:2.5rem;
+      gap:2.6rem;
       align-items:center;
     }
     .hero-eyebrow{
-      font-size:1.1rem;
+      font-size:1.05rem;
       font-weight:600;
-      color:#ffd0b8;
+      color:#ffd3b3;
+      letter-spacing:0.05em;
+      text-transform:uppercase;
     }
     .hero-title{
       font-size:3rem;
       line-height:1.15;
       margin-top:0.4rem;
-      margin-bottom:0.7rem;
+      margin-bottom:0.75rem;
     }
     .hero-title span{
       color:#ffb26b;
     }
     .hero-tagline{
-      font-size:0.98rem;
-      max-width:480px;
-      color:#f0f0f0;
-      margin-bottom:1.5rem;
+      font-size:0.99rem;
+      max-width:500px;
+      color:#f5f5ff;
+      margin-bottom:1.4rem;
     }
     .hero-meta{
-      font-size:0.85rem;
+      font-size:0.86rem;
       color:var(--muted);
-      margin-bottom:1.9rem;
+      margin-bottom:2rem;
     }
     .hero-meta span{
       color:#ffe0b5;
@@ -248,34 +225,35 @@
     }
     .btn-primary{
       border-radius:var(--radius-pill);
-      padding:0.75rem 1.6rem;
+      padding:0.75rem 1.7rem;
       border:1px solid rgba(255,123,84,0.8);
       background:var(--accent-soft);
       color:#ffeade;
       font-size:0.9rem;
       font-weight:600;
       cursor:pointer;
-      transition:.25s ease-out;
+      transition:.22s ease-out;
+      backdrop-filter:blur(8px);
     }
     .btn-primary:hover{
       background:var(--accent);
       color:#1b0c06;
-      box-shadow:0 12px 26px rgba(255,123,84,0.6);
+      box-shadow:0 12px 28px rgba(255,123,84,0.6);
       transform:translateY(-1px);
     }
     .btn-ghost{
       border-radius:var(--radius-pill);
-      padding:0.7rem 1.4rem;
+      padding:0.72rem 1.45rem;
       border:1px solid rgba(255,255,255,0.35);
-      background:rgba(10,12,30,0.6);
+      background:rgba(8,10,26,0.7);
       font-size:0.88rem;
       cursor:pointer;
       color:#f5f5f5;
       text-decoration:none;
-      transition:.25s ease-out;
+      transition:.22s ease-out;
     }
     .btn-ghost:hover{
-      background:rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.06);
       border-color:#ffffff;
       transform:translateY(-1px);
     }
@@ -284,25 +262,37 @@
       color:#ffe4d5;
       text-decoration:underline;
       text-underline-offset:3px;
+      opacity:0.9;
     }
 
     .hero-profile{
       justify-self:center;
     }
     .profile-panel{
-      background:rgba(10,12,30,0.9);
+      background:linear-gradient(145deg,#090b1a,#11152d);
       border-radius:22px;
-      border:1px solid rgba(255,255,255,0.08);
-      padding:1.4rem 1.3rem 1.4rem;
+      border:1px solid rgba(255,255,255,0.09);
+      padding:1.5rem 1.4rem;
       position:relative;
-      max-width:330px;
+      max-width:340px;
+      box-shadow:0 14px 38px rgba(0,0,0,0.85);
+    }
+    .profile-panel::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:inherit;
+      background:linear-gradient(135deg,rgba(255,178,107,0.75),transparent,rgba(125,211,252,0.4));
+      opacity:0.24;
+      z-index:-1;
     }
     .profile-photo-wrap{
-      width:92px;height:92px;
+      width:94px;height:94px;
       border-radius:50%;
       border:3px solid rgba(255,178,107,0.9);
       padding:3px;
-      margin-bottom:0.6rem;
+      margin-bottom:0.7rem;
+      box-shadow:0 0 22px rgba(255,178,107,0.55);
     }
     .profile-photo{
       width:100%;height:100%;
@@ -311,37 +301,41 @@
       background:#222;
     }
     .profile-name{
-      font-size:1.1rem;
+      font-size:1.12rem;
       font-weight:600;
     }
     .profile-role{
       font-size:0.86rem;
       color:var(--muted);
-      margin-bottom:0.7rem;
+      margin-bottom:0.85rem;
     }
     .profile-row{
       display:flex;
       justify-content:space-between;
       font-size:0.78rem;
       color:var(--muted);
-      margin-bottom:0.25rem;
+      margin-bottom:0.28rem;
     }
     .profile-row span{
       color:#ffe0b5;
     }
     .profile-status{
-      margin-top:0.7rem;
-      display:flex;
+      margin-top:0.9rem;
+      display:inline-flex;
       align-items:center;
-      gap:0.35rem;
+      gap:0.4rem;
       font-size:0.8rem;
-      color:#aaffc6;
+      color:#bbf7d0;
+      padding:0.35rem 0.7rem;
+      border-radius:999px;
+      background:rgba(21,128,61,0.18);
+      border:1px solid rgba(74,222,128,0.45);
     }
     .status-dot{
-      width:8px;height:8px;
+      width:9px;height:9px;
       border-radius:50%;
-      background:#3cff9b;
-      box-shadow:0 0 8px rgba(60,255,155,0.9);
+      background:#4ade80;
+      box-shadow:0 0 9px rgba(74,222,128,0.95);
     }
 
     /* ========= ABOUT ========= */
@@ -352,12 +346,13 @@
       margin-top:0.8rem;
     }
     .card{
-      background:var(--bg-alt);
+      background:linear-gradient(145deg,var(--bg-alt),#080c21);
       border-radius:var(--radius-lg);
       border:1px solid var(--border);
-      padding:1.3rem 1.4rem;
+      padding:1.4rem 1.5rem;
       font-size:0.93rem;
       color:var(--muted);
+      box-shadow:0 12px 30px rgba(0,0,0,0.65);
     }
     .card strong{color:#ffe0b5;}
 
@@ -369,30 +364,31 @@
       margin-top:0.9rem;
     }
     .skill-card{
-      background:var(--bg-alt);
+      background:linear-gradient(145deg,var(--bg-alt),#070a1a);
       border-radius:var(--radius-lg);
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,0.08);
       padding:1.1rem 1.2rem;
       font-size:0.88rem;
+      box-shadow:0 10px 26px rgba(0,0,0,0.65);
     }
     .skill-card h3{
-      font-size:0.96rem;
+      font-size:0.98rem;
       margin-bottom:0.55rem;
     }
     .skill-tags{
       display:flex;
       flex-wrap:wrap;
-      gap:0.3rem;
+      gap:0.35rem;
     }
     .skill-tag{
       font-size:0.76rem;
-      padding:0.25rem 0.6rem;
+      padding:0.28rem 0.65rem;
       border-radius:var(--radius-pill);
       border:1px solid rgba(255,255,255,0.12);
       background:rgba(255,255,255,0.03);
     }
 
-    /* ========= PROJECTS & CERTIFICATES GRID (3x3) ========= */
+    /* ========= PROJECTS & CERTIFICATES GRID ========= */
     .projects-grid,
     .cert-grid{
       display:grid;
@@ -403,15 +399,16 @@
 
     /* ========= PROJECTS ========= */
     .project-card{
-      background:var(--bg-alt);
+      background:linear-gradient(150deg,#090b1b,#0e1226);
       border-radius:var(--radius-lg);
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,0.08);
       padding:1.1rem 1.2rem 1.3rem;
       font-size:0.88rem;
       position:relative;
       overflow:hidden;
       cursor:pointer;
-      transition:.25s ease-out;
+      transition:.23s ease-out;
+      box-shadow:0 14px 32px rgba(0,0,0,0.75);
     }
     .project-card::before{
       content:"";
@@ -425,22 +422,22 @@
     }
     .project-card:hover::before{transform:scaleX(1);}
     .project-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 16px 40px rgba(0,0,0,0.7);
+      transform:translateY(-5px);
+      box-shadow:0 18px 44px rgba(0,0,0,0.85);
       border-color:rgba(255,178,107,0.75);
     }
     .project-thumb{
       width:100%;
       height:200px;
       object-fit:contain;
-      background:#0b0e1f;
-      padding:8px;
-      border-radius:12px;
-      margin-bottom:0.75rem;
+      background:#050719;
+      padding:10px;
+      border-radius:14px;
+      margin-bottom:0.8rem;
     }
     .project-pill{
       font-size:0.75rem;
-      padding:0.2rem 0.65rem;
+      padding:0.18rem 0.7rem;
       border-radius:var(--radius-pill);
       border:1px solid rgba(255,255,255,0.12);
       color:var(--muted);
@@ -448,6 +445,7 @@
       align-items:center;
       gap:0.35rem;
       margin-bottom:0.55rem;
+      background:rgba(255,255,255,0.02);
     }
     .project-pill span{
       width:7px;height:7px;border-radius:50%;background:#ffb26b;
@@ -460,6 +458,7 @@
     .project-desc{
       color:var(--muted);
       margin-bottom:0.6rem;
+      font-size:0.86rem;
     }
     .project-tech{
       font-size:0.78rem;
@@ -477,37 +476,37 @@
       gap:1.3rem;
     }
     .art-item{
-      background:var(--bg-alt);
+      background:var(--bg-soft);
       border-radius:18px;
-      border:1px solid var(--border);
+      border:1px solid rgba(255,255,255,0.08);
       overflow:hidden;
       cursor:pointer;
-      transition:.3s ease-in-out;
-      box-shadow:0 10px 28px rgba(0,0,0,0.35);
+      transition:.25s ease-in-out;
+      box-shadow:0 12px 32px rgba(0,0,0,0.7);
     }
     .art-item:hover{
       transform:translateY(-6px);
       border-color:#ffb26b;
-      box-shadow:0 18px 50px rgba(255,123,84,0.45);
+      box-shadow:0 20px 52px rgba(255,123,84,0.4);
     }
     .art-item img{
       width:100%;
       height:auto;
       object-fit:contain;
       display:block;
-      background:#0b0e1f;
+      background:#050719;
       padding:6px;
-      transition:transform .4s ease;
+      transition:transform .35s ease;
     }
     .art-item:hover img{
       transform:scale(1.03);
     }
     .art-caption{
-      padding:0.9rem;
+      padding:0.9rem 0.95rem;
       font-size:0.88rem;
       color:var(--muted);
-      background:rgba(255,255,255,0.03);
-      border-top:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.02);
+      border-top:1px solid rgba(255,255,255,0.1);
     }
     .art-caption strong{
       color:#ffcb99;
@@ -518,26 +517,28 @@
 
     /* ========= CERTIFICATES ========= */
     .cert-card{
-      background:var(--bg-alt);
+      background:linear-gradient(150deg,#090b1b,#0e1226);
       border-radius:var(--radius-lg);
-      border:1px solid var(--border);
-      padding:1rem;
+      border:1px solid rgba(255,255,255,0.08);
+      padding:1rem 1rem 1.2rem;
       text-align:center;
+      box-shadow:0 14px 32px rgba(0,0,0,0.75);
+      font-size:0.87rem;
     }
     .cert-thumb{
       width:100%;
-      height:160px;
+      height:170px;
       object-fit:cover;
-      border-radius:12px;
+      border-radius:14px;
       margin-bottom:0.8rem;
     }
     .cert-title{
-      font-size:0.92rem;
+      font-size:0.94rem;
       color:#ffe0b5;
-      margin-bottom:0.4rem;
+      margin-bottom:0.45rem;
     }
 
-    /* ========= MODALS (CERT + DRIVE VIDEO) ========= */
+    /* ========= GENERIC MODAL SHELL ========= */
     .modal{
       display:none;
       position:fixed;
@@ -546,33 +547,74 @@
       justify-content:center;
       align-items:center;
       z-index:9999;
+      padding:16px;
     }
+
+    /* Certificate modal inner */
     .modal-inner{
       position:relative;
       width:100%;
       height:100%;
+      max-width:1000px;
+      margin:auto;
       display:flex;
       justify-content:center;
       align-items:center;
-      padding:20px;
     }
     .modal-content{
-      max-width:95vw;
-      max-height:95vh;
+      max-width:100%;
+      max-height:100%;
       object-fit:contain;
-      border-radius:10px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.8);
+      border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.9);
       background:#000;
     }
-    .close-btn{
+
+    /* Shared close button (X) – always inside frame */
+    .modal-close{
       position:absolute;
-      top:-32px;
-      right:0;
+      top:14px;
+      right:18px;
       font-size:26px;
       cursor:pointer;
-      color:#ffffff;
+      color:#fdfdfd;
       font-weight:700;
-      padding:4px 8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,0.75);
+      border:1px solid rgba(255,255,255,0.2);
+      box-shadow:0 10px 24px rgba(0,0,0,0.8);
+      line-height:1;
+      z-index:2;
+    }
+    .modal-close:hover{
+      background:rgba(15,23,42,0.95);
+    }
+
+    /* ========= VIDEO MODAL (GOOGLE DRIVE) ========= */
+    #videoModal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.93);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+      padding:16px;
+    }
+    .video-container{
+      position:relative;
+      width:min(100vw - 32px, 1100px);
+      aspect-ratio:16/9;
+      background:#000;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 24px 68px rgba(0,0,0,0.95);
+    }
+    #demoVideo{
+      width:100%;
+      height:100%;
+      border:none;
     }
 
     /* ========= CONTACT ========= */
@@ -583,15 +625,16 @@
       margin-top:1rem;
     }
     .contact-card{
-      background:var(--bg-alt);
+      background:linear-gradient(145deg,var(--bg-alt),#080c21);
       border-radius:var(--radius-lg);
       border:1px solid var(--border);
-      padding:1.2rem 1.3rem;
+      padding:1.35rem 1.4rem;
       font-size:0.9rem;
       color:var(--muted);
+      box-shadow:0 14px 36px rgba(0,0,0,0.7);
     }
     .contact-item{
-      margin-bottom:0.6rem;
+      margin-bottom:0.7rem;
     }
     .contact-label{
       font-size:0.78rem;
@@ -600,46 +643,72 @@
       color:var(--muted);
     }
     .contact-value{
-      font-size:0.94rem;
+      font-size:0.95rem;
       color:#ffe0b5;
+      word-break:break-word;
+    }
+
+    .contact-form{
+      display:flex;
+      flex-direction:column;
+      gap:0.7rem;
+    }
+    .contact-form label{
+      font-size:0.82rem;
+      color:var(--muted);
+      display:block;
+      margin-bottom:0.15rem;
     }
     .contact-form input,
     .contact-form textarea{
       width:100%;
       border-radius:12px;
       border:1px solid var(--border);
-      padding:0.55rem 0.65rem;
-      background:rgba(12,15,38,0.95);
+      padding:0.6rem 0.7rem;
+      background:rgba(12,15,38,0.98);
       color:#f5f5f5;
       font-family:inherit;
       font-size:0.86rem;
       outline:none;
-      transition:.22s ease-out;
-      margin-top:0.25rem;
+      transition:.2s ease-out;
     }
     .contact-form textarea{min-height:120px;resize:vertical;}
-    .contact-form label{
-      font-size:0.82rem;
-      color:var(--muted);
-    }
     .contact-form input:focus,
     .contact-form textarea:focus{
-      border-color:rgba(255,123,84,0.8);
+      border-color:rgba(255,123,84,0.85);
       box-shadow:0 0 0 1px rgba(255,123,84,0.55);
     }
     .contact-note{
-      font-size:0.76rem;
+      font-size:0.78rem;
       color:var(--muted);
-      margin-top:0.4rem;
+      margin-top:0.35rem;
+    }
+
+    /* Toast – small notification bottom-right */
+    #toast{
+      display:none;
+      position:fixed;
+      bottom:22px;
+      right:22px;
+      background:#0b1022;
+      border:1px solid #ff7b54;
+      padding:12px 18px;
+      border-radius:14px;
+      font-size:0.88rem;
+      box-shadow:0 14px 34px rgba(0,0,0,0.8);
+      color:#ffe7d6;
+      z-index:99999;
+      max-width:260px;
     }
 
     /* ========= FOOTER ========= */
     footer{
-      border-top:1px solid var(--border);
-      padding:1.2rem;
+      border-top:1px solid rgba(255,255,255,0.1);
+      padding:1.3rem;
       text-align:center;
-      font-size:0.78rem;
+      font-size:0.8rem;
       color:var(--muted);
+      margin-top:3rem;
     }
     footer span{color:#ffe0b5;}
 
@@ -647,32 +716,50 @@
     @media(max-width:960px){
       .hero-inner{
         grid-template-columns:1fr;
-        padding:2.7rem 1.6rem 2.3rem;
+        padding:2.7rem 1.7rem 2.5rem;
       }
-      .hero-title{font-size:2.3rem;}
-      .hero-wrapper{padding-top:80px;}
+      .hero-title{font-size:2.35rem;}
+      .hero-wrapper{padding-top:84px;}
       .about-grid,
       .contact-grid{
         grid-template-columns:1fr;
       }
+      .hero-profile{
+        order:-1;
+      }
+      .projects-grid,
+      .cert-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
       .art-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
       }
-      .projects-grid,
-      .cert-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
     }
+
     @media(max-width:640px){
-      .nav{padding-inline:1rem;}
-      nav ul{display:none;}
-      .hero-inner{padding:2.3rem 1.2rem 2rem;}
+      .nav{padding-inline:1.05rem;}
+      nav ul{display:none;} /* simple minimal mobile nav */
+      .hero-inner{padding:2.4rem 1.4rem 2.2rem;}
       .hero-title{font-size:2rem;}
-      main{padding-inline:1.1rem;}
-      .art-grid,
+      main{padding-inline:1.05rem;}
       .projects-grid,
-      .cert-grid{
+      .cert-grid,
+      .art-grid{
         grid-template-columns:1fr;
+      }
+      .video-container{
+        width:100%;
+        border-radius:12px;
+      }
+      .modal-close{
+        top:10px;
+        right:12px;
+      }
+      #toast{
+        left:16px;
+        right:16px;
+        max-width:none;
+        text-align:center;
       }
     }
   </style>
@@ -878,7 +965,6 @@
           <p class="project-tech">
             Tech: YOLO, OpenCV, CNN, SORT, Python, SQL
           </p>
-          <!-- Replace DRIVE_ID_YOLO with your real Drive ID -->
           <button class="btn-primary project-btn"
                   onclick="openDriveVideo('DRIVE_ID_YOLO')">
             View Demo
@@ -897,14 +983,13 @@
           <p class="project-tech">
             Tech: Python, Django, HTML/CSS/JS, Scikit-Learn
           </p>
-          <!-- Replace DRIVE_ID_CROP with your real Drive ID -->
           <button class="btn-primary project-btn"
                   onclick="openDriveVideo('DRIVE_ID_CROP')">
             View Demo
           </button>
         </article>
 
-        <!-- Project 3: Traffic & Accident Prediction (WITH YOUR DRIVE LINK) -->
+        <!-- Project 3: Traffic & Accident Prediction -->
         <article class="project-card">
           <img src="project-traffic.png" alt="Traffic & Accident Prediction" class="project-thumb">
           <div class="project-pill"><span></span>Predictive Analytics</div>
@@ -916,7 +1001,6 @@
           <p class="project-tech">
             Tech: ML Models, Python, Django/Flask, SQLite, Visualization
           </p>
-          <!-- This uses your provided Drive file ID -->
           <button class="btn-primary project-btn"
                   onclick="openDriveVideo('traffic')">
             View Demo
@@ -935,14 +1019,11 @@
           <p class="project-tech">
             Tech: MongoDB, Express, React, Node.js, Cloudinary API
           </p>
-          <!-- Replace DRIVE_ID_AI_IMAGE with your real Drive ID -->
           <button class="btn-primary project-btn"
                   onclick="openDriveVideo('DRIVE_ID_AI_IMAGE')">
             View Demo
           </button>
         </article>
-
-        <!-- You can add up to 9 project cards for a full 3x3 layout -->
       </div>
     </section>
 
@@ -962,7 +1043,7 @@
           <img src="cert1.jpg" alt="Paper Publication" class="cert-thumb">
           <h3 class="cert-title">YOLO-Infused Cross-Modal Monitoring for Future Threat Anticipation and Situational Awareness</h3>
           <p class="project-desc">
-            Published in IJMRSET (Impact Factor 8.206), this research integrates YOLO-based AI with cross-modal analytics to enhance real-time threat prediction. Demonstrates innovative AI-driven situational awareness for intelligent security and monitoring applications.
+            Published in IJMRSET (Impact Factor 8.206), this research integrates YOLO-based AI with cross-modal analytics to enhance real-time threat prediction.
           </p>
           <button class="btn-primary" onclick="openCert('cert1.jpg')">View Certificate</button>
         </div>
@@ -971,7 +1052,7 @@
           <img src="cert2.jpeg" alt="NC Conference" class="cert-thumb">
           <h3 class="cert-title">Certificate of Appreciation – National Conference NC2IA-2k25</h3>
           <p class="project-desc">
-            Presented a research paper titled "YOLO-Infused Cross-Modal Monitoring for Future Threat Anticipation and Situational Awareness" at the National Conference on Computation Intelligence and Applications, organized by the Department of MCA, AMC Engineering College.
+            Presented a research paper titled "YOLO-Infused Cross-Modal Monitoring for Future Threat Anticipation and Situational Awareness" at NC2IA-2k25.
           </p>
           <button class="btn-primary" onclick="openCert('cert2.jpeg')">View Certificate</button>
         </div>
@@ -980,7 +1061,7 @@
           <img src="cert3.jpeg" alt="AI ML DL Diploma" class="cert-thumb">
           <h3 class="cert-title">Diploma in Artificial Intelligence, Machine Learning, and Deep Learning</h3>
           <p class="project-desc">
-            Completed a comprehensive training program focused on AI, ML, and DL at Sivananda Sarma Memorial RV College, with practical implementation under Nanochip Solutions Pvt. Ltd.
+            Completed a comprehensive training program focused on AI, ML, and DL at Sivananda Sarma Memorial RV College.
           </p>
           <button class="btn-primary" onclick="openCert('cert3.jpeg')">View Certificate</button>
         </div>
@@ -989,7 +1070,7 @@
           <img src="cert4.jpeg" alt="AI & ML Training" class="cert-thumb">
           <h3 class="cert-title">Advanced AI & ML Training</h3>
           <p class="project-desc">
-            Recognized by Aqmenz Automation Pvt. Ltd. for outstanding performance in building and deploying an Iris Flower Classification model, showcasing end-to-end ML expertise.
+            Recognized by Aqmenz Automation Pvt. Ltd. for outstanding performance in building and deploying an Iris Flower Classification model.
           </p>
           <button class="btn-primary" onclick="openCert('cert4.jpeg')">View Certificate</button>
         </div>
@@ -998,7 +1079,7 @@
           <img src="cert5.jpeg" alt="Backend Bootcamp" class="cert-thumb">
           <h3 class="cert-title">Backend Web Development Bootcamp</h3>
           <p class="project-desc">
-            Completed a 7-day intensive bootcamp on backend web development, gaining hands-on experience with Node.js, Express, and server-side application design.
+            Completed a 7-day intensive bootcamp on backend web development using Node.js and Express.
           </p>
           <button class="btn-primary" onclick="openCert('cert5.jpeg')">View Certificate</button>
         </div>
@@ -1007,7 +1088,7 @@
           <img src="cert6.jpeg" alt="Microsoft Backend Program" class="cert-thumb">
           <h3 class="cert-title">Microsoft Learn Student Ambassador – Backend Development</h3>
           <p class="project-desc">
-            Completed a backend-focused program under the Microsoft Learn Student Ambassador initiative, strengthening skills in APIs, server architecture, and modern backend frameworks.
+            Strengthened skills in APIs, server architecture, and backend frameworks under the MLSA program.
           </p>
           <button class="btn-primary" onclick="openCert('cert6.jpeg')">View Certificate</button>
         </div>
@@ -1016,7 +1097,7 @@
           <img src="cert7.jpeg" alt="Art Contest" class="cert-thumb">
           <h3 class="cert-title">National Art Contest Participation</h3>
           <p class="project-desc">
-            Participated in the Art-Utsav Season-10 National Art Contest organized by Draw More, showcasing creative and artistic skills at a national level.
+            Participated in Art-Utsav Season-10 National Art Contest organized by Draw More.
           </p>
           <button class="btn-primary" onclick="openCert('cert7.jpeg')">View Certificate</button>
         </div>
@@ -1026,23 +1107,20 @@
     <!-- Certificate Modal -->
     <div id="certModal" class="modal">
       <div class="modal-inner">
-        <span class="close-btn" onclick="closeCert()">✕</span>
+        <span class="modal-close" onclick="closeCert()">✕</span>
         <img id="certImage" class="modal-content" alt="Certificate preview">
       </div>
     </div>
 
     <!-- Video Demo (Google Drive) Modal -->
-    <!-- FULLSCREEN VIDEO MODAL -->
-<div id="videoModal" class="modal">
-  <div class="video-container">
-    <span class="close-btn" onclick="closeVideo()">✕</span>
-    <iframe id="demoVideo" allow="autoplay" allowfullscreen></iframe>
-  </div>
-</div>
+    <div id="videoModal" class="modal">
+      <div class="video-container">
+        <span class="modal-close" onclick="closeVideo()">✕</span>
+        <iframe id="demoVideo" allow="autoplay" allowfullscreen></iframe>
+      </div>
+    </div>
 
-
-
-    <!-- ====== ART GALLERY (3x3 Grid) ====== -->
+    <!-- ====== ART GALLERY ====== -->
     <section id="art">
       <div class="section-heading">
         <div class="kicker">Art & Creativity</div>
@@ -1154,32 +1232,32 @@
         </article>
 
         <article class="contact-card">
-  <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" id="contactForm">
-    <input type="hidden" name="access_key" value="3a086ae5-e254-4992-9f27-2cc69dd7d136">
+          <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" id="contactForm">
+            <input type="hidden" name="access_key" value="3a086ae5-e254-4992-9f27-2cc69dd7d136">
 
-    <label>Name</label>
-    <input type="text" name="name" placeholder="Your Name" required>
+            <div>
+              <label>Name</label>
+              <input type="text" name="name" placeholder="Your Name" required>
+            </div>
 
-    <label>Email</label>
-    <input type="email" name="email" placeholder="you@example.com" required>
+            <div>
+              <label>Email</label>
+              <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
 
-    <label>Message</label>
-    <textarea name="message" placeholder="Tell me about your project, role, or idea..." required></textarea>
+            <div>
+              <label>Message</label>
+              <textarea name="message" placeholder="Tell me about your project, role, or idea..." required></textarea>
+            </div>
 
-    <button type="submit" class="btn-primary">Send Message</button>
-     <div class="contact-note">
-This form sends your message directly to my inbox using secure serverless technology.
-        </div>
-  </form>
+            <button type="submit" class="btn-primary">Send Message</button>
+            <div class="contact-note">
+              This form sends your message directly to my inbox using secure serverless technology.
+            </div>
+          </form>
 
-  <!-- Toast message -->
-  <div id="toast" style="
-    display:none; position:fixed; bottom:25px; right:25px;
-    background:#1a1f3d; border:1px solid #ff7b54;
-    padding:12px 18px; border-radius:12px; font-size:0.9rem;
-    box-shadow:0 8px 24px rgba(0,0,0,0.4); color:#ffe7d6; z-index:99999;">
-  </div>
-</article>
+          <div id="toast"></div>
+        </article>
       </div>
     </section>
   </main>
@@ -1189,36 +1267,10 @@ This form sends your message directly to my inbox using secure serverless techno
   </footer>
 
   <script>
-
-    document.getElementById('contactForm').addEventListener('submit', async function(e){
-  e.preventDefault(); // stop default behavior
-  const form = e.target;
-  const formData = new FormData(form);
-  const userName = formData.get("name"); // get entered name
-
-  // send form data to Web3Forms
-  const response = await fetch(form.action, {
-    method: "POST",
-    body: formData
-  });
-
-  if(response.ok){
-    form.reset(); // clear form
-    showToast(`Thank you, ${userName}! Your message has been sent 🚀`);
-  }
-});
-
-// show toast message
-function showToast(msg){
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.style.display = "block";
-  setTimeout(()=> toast.style.display = "none", 3000);
-}
-    // Update year
+    // ===== YEAR =====
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Smooth scroll helper
+    // ===== SMOOTH SCROLL =====
     function scrollToSection(id){
       const el = document.getElementById(id);
       if(el){
@@ -1226,7 +1278,7 @@ function showToast(msg){
       }
     }
 
-    // Simple nav active state on click
+    // ===== NAV ACTIVE STATE =====
     document.querySelectorAll('header nav a').forEach(link=>{
       link.addEventListener('click',()=>{
         document.querySelectorAll('header nav a').forEach(l=>l.classList.remove('active'));
@@ -1234,74 +1286,109 @@ function showToast(msg){
       });
     });
 
+    // ===== CONTACT FORM (Web3Forms + Toast) =====
+    document.getElementById('contactForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const userName = formData.get("name");
 
-    // Certificate modal logic
+      try{
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData
+        });
+
+        if(response.ok){
+          form.reset();
+          showToast(`Thank you, ${userName}! Your message has been sent 🚀`);
+        }else{
+          showToast("Something went wrong. Please try again.");
+        }
+      }catch(err){
+        showToast("Network error. Please try again.");
+      }
+    });
+
+    function showToast(msg){
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = "block";
+      setTimeout(()=> toast.style.display = "none", 3200);
+    }
+
+    // ===== CERTIFICATE MODAL =====
     function openCert(src){
-  const modal = document.getElementById('certModal');
-  const img = document.getElementById('certImage');
-  img.src = src;
-  modal.style.display = 'flex';
+      const modal = document.getElementById('certModal');
+      const img = document.getElementById('certImage');
+      img.src = src;
+      modal.style.display = 'flex';
+      history.pushState({modalOpen:true}, "");
+    }
 
-  // Save state for mobile back button
-  history.pushState({modalOpen: true}, "");
-}
+    function closeCert(){
+      const modal = document.getElementById('certModal');
+      modal.style.display = 'none';
+      document.getElementById('certImage').src = "";
+      if(history.state && history.state.modalOpen){
+        history.back();
+      }
+    }
 
-// Close certificate modal
-function closeCert(){
-  const modal = document.getElementById('certModal');
-  modal.style.display = 'none';
-  document.getElementById('certImage').src = "";
+    document.getElementById('certModal').addEventListener('click', function(e){
+      if(e.target === this){
+        closeCert();
+      }
+    });
 
-  // Go back a step if history was added
-  if (history.state && history.state.modalOpen) {
-    history.back();
-  }
-}
-
-// Clicking outside image closes modal
-document.getElementById('certModal').addEventListener('click', function(e){
-  if(e.target === this){
-    closeCert();
-  }
-});
-
-// ESC key closes certificate modal
-document.addEventListener('keydown', function(e){
-  if (e.key === "Escape") {
-    const modal = document.getElementById('certModal');
-    if (modal.style.display === 'flex') closeCert();
-  }
-});
-
-// Handle mobile BACK button
-window.addEventListener('popstate', function(e) {
-  const modal = document.getElementById('certModal');
-  if (modal.style.display === 'flex') {
-    closeCert();
-  }
-});
-
-    // Google Drive video modal logic
+    // ===== GOOGLE DRIVE VIDEO MODAL =====
     function openDriveVideo(id){
-    const links = {
+      const links = {
         "DRIVE_ID_YOLO": "https://drive.google.com/file/d/1lD2Ecu6L0Y0h8vl3E071zXQW3K5ijYAA/preview",
         "DRIVE_ID_CROP": "https://drive.google.com/file/d/1Hk_CqxcfpgkepsDudCyDIULGFowcN-Of/preview",
-        "traffic": "https://drive.google.com/file/d/1ZE42Mjos4ghXN6yTOLeYOKTw2cQYbjVc/preview"
-    };
+        "traffic": "https://drive.google.com/file/d/1ZE42Mjos4ghXN6yTOLeYOKTw2cQYbjVc/preview",
+        "DRIVE_ID_AI_IMAGE": "https://drive.google.com/file/d/DRIVE_ID_AI_IMAGE_REPLACE/preview" // replace if needed
+      };
 
-    document.getElementById('videoModal').style.display = "flex";
-    document.getElementById('demoVideo').src = links[id];
-}
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('demoVideo');
+      iframe.src = links[id];
+      modal.style.display = "flex";
+    }
 
-function closeVideo(){
-    document.getElementById('videoModal').style.display = "none";
-    document.getElementById('demoVideo').src = ""; // stop playback
-}
+    function closeVideo(){
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('demoVideo');
+      modal.style.display = "none";
+      iframe.src = ""; // stop playback
+    }
 
-// Close on clicking outside video
-document.getElementById('videoModal').addEventListener('click', function(e){
-  if(e.target === this){ closeVideo(); }
-});
+    document.getElementById('videoModal').addEventListener('click', function(e){
+      if(e.target === this){ closeVideo(); }
+    });
+
+    // ===== ESC KEY FOR BOTH MODALS =====
+    document.addEventListener('keydown', function(e){
+      if(e.key === "Escape"){
+        const certModal = document.getElementById('certModal');
+        const videoModal = document.getElementById('videoModal');
+
+        if(certModal.style.display === 'flex'){
+          closeCert();
+        }
+        if(videoModal.style.display === 'flex'){
+          closeVideo();
+        }
+      }
+    });
+
+    // ===== MOBILE BACK BUTTON HANDLING (CERT MODAL) =====
+    window.addEventListener('popstate', function(){
+      const modal = document.getElementById('certModal');
+      if (modal.style.display === 'flex') {
+        closeCert();
+      }
+    });
   </script>
 </body>
 </html>
