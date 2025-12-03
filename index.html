@@ -913,6 +913,24 @@ footer{
   to{transform:translateX(0);opacity:1;}
 }
 
+/* FIX MOBILE GAP BETWEEN SECTIONS */
+section {
+  margin-bottom: 60px; /* controlled spacing */
+}
+
+@media (max-width: 768px) {
+  section {
+    margin-bottom: 35px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .hero, #certificates, #projects {
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:968px){
   .navbar{padding:1rem 1.5rem;}
@@ -1544,387 +1562,208 @@ footer{
 
   <div id="toast" class="toast"></div>
   <script>
+// ========= DEVICE CHECK =========
+const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+
 // ========= UPDATE YEAR =========
-document.getElementById('year').textContent = new Date().getFullYear();
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ========= SMOOTH SCROLL FUNCTION =========
 function scrollToSection(id) {
   const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ========= NAVBAR SCROLL EFFECT =========
-let lastScroll = 0;
+// ========= NAVBAR SCROLL SHADOW =========
 const header = document.querySelector('header');
-
 window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
-  
-  if (currentScroll > 50) {
-    header.style.background = 'rgba(15, 23, 42, 0.98)';
-    header.style.boxShadow = '0 18px 55px rgba(0, 0, 0, 0.8)';
-  } else {
-    header.style.background = 'linear-gradient(90deg,rgba(15,23,42,.9),rgba(15,23,42,.75))';
-    header.style.boxShadow = 'none';
-  }
-  
-  lastScroll = currentScroll;
+  header.style.background = window.scrollY > 50
+    ? 'rgba(15, 23, 42, 0.98)'
+    : 'linear-gradient(90deg,rgba(15,23,42,.9),rgba(15,23,42,.75))';
 });
 
-// ========= ACTIVE NAV LINK ON SCROLL =========
+// ========= ACTIVE NAV HIGHLIGHT =========
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
-
 window.addEventListener('scroll', () => {
   let current = '';
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    if (window.pageYOffset >= sectionTop - 250) {
-      current = section.getAttribute('id');
-    }
+  sections.forEach(sec => {
+    if (scrollY >= sec.offsetTop - 250) current = sec.id;
   });
-  
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
+  navLinks.forEach(link =>
+    link.classList.toggle('active', link.getAttribute('href') === `#${current}`)
+  );
 });
 
-// ========= NAV LINK CLICK HANDLER =========
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
+// ========= NAV CLICK SCROLL =========
+navLinks.forEach(link =>
+  link.addEventListener('click', e => {
     e.preventDefault();
-    const targetId = link.getAttribute('href').substring(1);
-    scrollToSection(targetId);
-  });
-});
+    scrollToSection(link.getAttribute('href').substring(1));
+  })
+);
 
-// ========= HERO SUBTITLE TYPING EFFECT =========
-const heroSubtitle = document.querySelector('.hero-subtitle');
-if (heroSubtitle) {
-  const originalText = heroSubtitle.textContent.trim();
-  heroSubtitle.innerHTML = `<span class="typing">${originalText}</span>`;
+// ========= HERO TYPING EFFECT =========
+const subtitle = document.querySelector('.hero-subtitle span.typing');
+if (subtitle) {
+  subtitle.style.display = 'inline-block';
+  subtitle.style.borderRight = '3px solid var(--aurora-2)';
+  subtitle.style.animation = 'typing 3s steps(40,end) forwards, blink .8s infinite';
+  if (isMobile) {
+    subtitle.style.fontSize = '1.2rem';
+  }
 }
 
-// ========= IMAGE MODAL (for certificates and art) =========
+// ========= IMAGE MODAL =========
 const imageModal = document.getElementById('imageModal');
 const modalImage = document.getElementById('modalImage');
-
-function openCert(imageSrc) {
+function openCert(src) {
   imageModal.style.display = 'flex';
-  modalImage.src = imageSrc;
+  modalImage.src = src;
   document.body.style.overflow = 'hidden';
-  history.pushState({ modalOpen: true }, '');
 }
-
 function closeModal() {
   imageModal.style.display = 'none';
   modalImage.src = '';
   document.body.style.overflow = 'auto';
-  if (history.state && history.state.modalOpen) {
-    history.back();
-  }
 }
-
-imageModal.addEventListener('click', (e) => {
-  if (e.target === imageModal) {
-    closeModal();
-  }
-});
+imageModal?.addEventListener('click', e => e.target === imageModal && closeModal());
 
 // ========= VIDEO MODAL =========
 const videoModal = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
-
-// ✅ Use ONLY /preview links here (no /view, no download)
 const videoLinks = {
   "DRIVE_ID_YOLO": "https://drive.google.com/file/d/1b2vtjdFsqP_Oa-R37t6iBgs0SVJdNH6R/preview",
   "DRIVE_ID_CROP": "https://drive.google.com/file/d/1Hk_CqxcfpgkepsDudCyDIULGFowcN-Of/preview",
   "traffic": "https://drive.google.com/file/d/1ZE42Mjos4ghXN6yTOLeYOKTw2cQYbjVc/preview",
-  // 🔁 Replace DRIVE_ID_AI_IMAGE_REPLACE with your real file IDhttps://drive.google.com/file/d/1b2vtjdFsqP_Oa-R37t6iBgs0SVJdNH6R/view?usp=sharing
   "DRIVE_ID_AI_IMAGE": "https://drive.google.com/file/d/DRIVE_ID_AI_IMAGE_REPLACE/preview"
 };
-
-function openDriveVideo(videoId) {
-  const baseUrl = videoLinks[videoId];
-  if (baseUrl) {
-    // optional autoplay param – safe for Drive
-    const finalUrl = baseUrl.includes('?') ? baseUrl + '&autoplay=1' : baseUrl + '?autoplay=1';
-
-    videoFrame.src = finalUrl;
-    videoModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-
-    history.pushState({ videoModalOpen: true }, '');
-  }
+function openDriveVideo(id) {
+  if (!videoLinks[id]) return alert("Video not added!");
+  videoFrame.src = `${videoLinks[id]}?autoplay=1`;
+  videoModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
-
 function closeVideo() {
   videoModal.style.display = 'none';
-  videoFrame.src = ''; // stop video
+  videoFrame.src = '';
   document.body.style.overflow = 'auto';
-  if (history.state && history.state.videoModalOpen) {
-    history.back();
-  }
 }
-
-videoModal.addEventListener('click', (e) => {
-  if (e.target === videoModal) {
-    closeVideo();
-  }
-});
-
-// ========= KEYBOARD SHORTCUTS =========
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (imageModal.style.display === 'flex') {
-      closeModal();
-    }
-    if (videoModal.style.display === 'flex') {
-      closeVideo();
-    }
-  }
-});
-
-// ========= MOBILE BACK BUTTON HANDLING =========
-window.addEventListener('popstate', () => {
-  if (imageModal.style.display === 'flex') {
-    closeModal();
-  }
-  if (videoModal.style.display === 'flex') {
-    closeVideo();
-  }
-});
-
-// ========= CONTACT FORM SUBMISSION =========
-const contactForm = document.getElementById('contactForm');
-const toast = document.getElementById('toast');
-
-contactForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData(contactForm);
-  const userName = formData.get('name');
-  const submitBtn = contactForm.querySelector('button[type="submit"]');
-  
-  const originalHTML = submitBtn.innerHTML;
-  submitBtn.innerHTML = '<span>Sending...</span>';
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.7';
-  
-  try {
-    const response = await fetch(contactForm.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-    
-    if (response.ok) {
-      showToast(`✅ Thanks ${userName}! Your message has been sent successfully.`);
-      contactForm.reset();
-    } else {
-      showToast('❌ Oops! Something went wrong. Please try again.');
-    }
-  } catch (error) {
-    showToast('❌ Network error. Please check your connection and try again.');
-  } finally {
-    submitBtn.innerHTML = originalHTML;
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-  }
-});
+videoModal?.addEventListener('click', e => e.target === videoModal && closeVideo());
 
 // ========= TOAST NOTIFICATION =========
-function showToast(message) {
-  toast.textContent = message;
+const toast = document.getElementById('toast');
+function showToast(msg) {
+  toast.textContent = msg;
   toast.style.display = 'block';
-  setTimeout(() => {
-    toast.style.display = 'none';
-  }, 4000);
+  setTimeout(() => toast.style.display = 'none', 3500);
 }
 
-// ========= SCROLL REVEAL ANIMATIONS =========
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -100px 0px'
-};
+// ========= CONTACT FORM =========
+document.getElementById('contactForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const submit = form.querySelector('button');
+  submit.disabled = true;
+  submit.innerHTML = 'Sending...';
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, observerOptions);
-
-const revealElements = document.querySelectorAll(
-  '.about-card, .skill-category, .project-card, .cert-card, .gallery-item, .info-item'
-);
-
-revealElements.forEach((el, index) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(30px)';
-  el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
-  observer.observe(el);
-});
-
-// ========= PARALLAX EFFECT ON HERO =========
-const heroContent = document.querySelector('.hero-content');
-
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  if (heroContent && scrolled < 800) {
-    const parallaxSpeed = 0.25;
-    heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-    heroContent.style.opacity = 1 - (scrolled / 900);
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    showToast(res.ok ? "Message sent successfully!" : "Error! Try again.");
+    form.reset();
+  } catch {
+    showToast("Network Error!");
   }
+  submit.disabled = false;
+  submit.innerHTML = 'Send Message';
 });
 
-// ========= SMOOTH APPEARANCE ON PAGE LOAD =========
-window.addEventListener('load', () => {
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.6s ease';
-  requestAnimationFrame(() => {
-    document.body.style.opacity = '1';
-  });
+// ========= PARALLAX (LIMITED FOR MOBILE) =========
+const heroContent = document.querySelector('.hero-content');
+window.addEventListener('scroll', () => {
+  if (!heroContent) return;
+  const y = scrollY * (isMobile ? 0.12 : 0.25);
+  if (scrollY < 600) heroContent.style.transform = `translateY(${y}px)`;
 });
+
+// ========= PARTICLES (MOBILE OPTIMIZED) =========
+const canvas = document.getElementById('particles');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let width, height, particles = [];
+
+  function resize() {
+    width = canvas.width = innerWidth;
+    height = canvas.height = innerHeight;
+  }
+  resize(); addEventListener('resize', resize);
+
+  function spawn() {
+    particles = [];
+    const count = isMobile ? 30 : 60;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 1,
+        dx: (Math.random() - .5) * .3,
+        dy: (Math.random() - .5) * .3
+      });
+    }
+  }
+  spawn();
+
+  (function animate() {
+    ctx.clearRect(0,0,width,height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(148,163,255,.25)";
+      ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+    });
+    requestAnimationFrame(animate);
+  })();
+}
 
 // ========= CUSTOM CURSOR =========
-const cursor = document.createElement('div');
-cursor.className = 'custom-cursor';
-document.body.appendChild(cursor);
+// Enabled even on mobile since you selected A
+if (document.body) {
+  const cursor = document.createElement('div');
+  cursor.className = 'custom-cursor';
+  document.body.appendChild(cursor);
 
-let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+  let x = 0, y = 0;
+  addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  document.querySelectorAll('a, button, .project-card')
+    .forEach(el => el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(1.5)'));
+  document.querySelectorAll('a, button, .project-card')
+    .forEach(el => el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)'));
+}
+
+// ========= PAGE FADE-IN =========
+addEventListener('load', () => {
+  document.body.style.opacity = 0;
+  document.body.style.transition = "opacity .6s ease";
+  requestAnimationFrame(() => document.body.style.opacity = 1);
 });
 
-function animateCursor() {
-  const speed = 0.18;
-  cursorX += (mouseX - cursorX) * speed;
-  cursorY += (mouseY - cursorY) * speed;
-  cursor.style.left = cursorX + 'px';
-  cursor.style.top = cursorY + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
+// ========= LOG =========
+console.log("🚀 Portfolio fully optimized for desktop & mobile effects");
 
-const interactiveElements = document.querySelectorAll(
-  'a, button, .project-card, .cert-card, .gallery-item'
-);
-
-interactiveElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'scale(1.5)';
-    cursor.style.borderColor = 'var(--aurora-2)';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'scale(1)';
-    cursor.style.borderColor = 'var(--primary-light)';
-  });
-});
-
-// ========= PARTICLES BACKGROUND =========
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let width, height;
-
-function resizeCanvas(){
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-function createParticles(){
-  particles = [];
-  const count = 60;
-  for(let i=0;i<count;i++){
-    particles.push({
-      x:Math.random()*width,
-      y:Math.random()*height,
-      radius:Math.random()*2+0.5,
-      alpha:Math.random()*0.5+0.2,
-      dx:(Math.random()-0.5)*0.3,
-      dy:(Math.random()-0.5)*0.3
-    });
-  }
-}
-createParticles();
-
-function drawParticles(){
-  ctx.clearRect(0,0,width,height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    const grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.radius*4);
-    grd.addColorStop(0,`rgba(148,163,255,${p.alpha})`);
-    grd.addColorStop(1,'rgba(15,23,42,0)');
-    ctx.fillStyle = grd;
-    ctx.arc(p.x,p.y,p.radius*4,0,Math.PI*2);
-    ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x<0)p.x=width;
-    if(p.x>width)p.x=0;
-    if(p.y<0)p.y=height;
-    if(p.y>height)p.y=0;
-  });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-// ========= PERFORMANCE DEBOUNCE (placeholder) =========
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-const debouncedScroll = debounce(() => {}, 120);
-window.addEventListener('scroll', debouncedScroll);
-
-// ========= LOG INITIALIZATION =========
-console.log('%c🚀 Aurora-Pro Portfolio Loaded!', 'color:#9b5cff;font-size:16px;font-weight:bold;');
-console.log('%cDesigned & Developed by Manoj Somanna', 'color:#a5b4fc;font-size:12px;');
-
-// ========= EASTER EGG =========
-let clickCount = 0;
-const brandIcon = document.querySelector('.brand-icon');
-
-brandIcon.addEventListener('click', () => {
-  clickCount++;
-  if (clickCount === 5) {
-    showToast('🎉 You found the easter egg! Thanks for exploring!');
-    brandIcon.style.animation = 'spin 1s ease-in-out';
-    clickCount = 0;
-    setTimeout(() => {
-      brandIcon.style.animation = '';
-    }, 1000);
-  }
-});
-
-const spinKeyframes = document.createElement('style');
-spinKeyframes.textContent = `
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-`;
-document.head.appendChild(spinKeyframes);
   </script>
 </body>
 </html>
