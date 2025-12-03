@@ -962,17 +962,11 @@ footer{
 </head>
 <body>
 
-  <!-- Particle Layer -->
+  
+  <!-- ========= PARTICLES CANVAS ========= -->
   <canvas id="particles"></canvas>
 
-  <!-- Old background wrapper (shapes disabled in CSS but kept for safety) -->
-  <div class="bg-animation">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-  </div>
-
-  <!-- ====== NAVBAR ====== -->
+  <!-- ========= NAVBAR ========= -->
   <header>
     <nav class="navbar">
       <div class="nav-brand">
@@ -989,81 +983,74 @@ footer{
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
       <button class="nav-btn" onclick="scrollToSection('contact')">
-        <span>Let's Talk</span>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M1 8H15M15 8L8 1M15 8L8 15" stroke="currentColor" stroke-width="2"/>
-        </svg>
+        Let's Talk →
       </button>
     </nav>
   </header>
 
-  <main>
-    <!-- ====== HERO ====== -->
-    <section class="hero" id="home">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            Available for opportunities
+  <!-- ========= HERO ========= -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Available for opportunities
+        </div>
+
+        <h1 class="hero-title">
+          Hi, I'm <span class="gradient-text">Manoj Somanna</span>
+        </h1>
+
+        <!-- FIXED TYPING EFFECT (OPTION A - SINGLE TEXT) -->
+        <h2 class="hero-subtitle">
+          <span class="typing">Software Developer & AI Enthusiast</span>
+        </h2>
+
+        <p class="hero-description">
+          MCA graduate specializing in AI/ML, computer vision, and full-stack development.
+          I craft intelligent solutions that merge cutting-edge technology with creative problem-solving.
+        </p>
+
+        <!-- UNCHANGED CONTENT BELOW -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value">90%</div>
+            <div class="stat-label">MCA Aggregate</div>
           </div>
-          
-          <h1 class="hero-title">
-            Hi, I'm <span class="gradient-text">Manoj Somanna</span>
-          </h1>
-          
-          <h2 class="hero-subtitle">Software Developer & AI Enthusiast</h2>
-          
-          <p class="hero-description">
-            MCA graduate specializing in AI/ML, computer vision, and full-stack development. 
-            I craft intelligent solutions that merge cutting-edge technology with creative problem-solving.
-          </p>
-          
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-value">90%</div>
-              <div class="stat-label">MCA Aggregate</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value">4+</div>
-              <div class="stat-label">Major Projects</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value">7+</div>
-              <div class="stat-label">Certifications</div>
-            </div>
+          <div class="stat-item">
+            <div class="stat-value">4+</div>
+            <div class="stat-label">Major Projects</div>
           </div>
-          
-          <div class="hero-actions">
-            <button class="btn btn-primary" onclick="scrollToSection('projects')">
-              View Projects
-            </button>
-            <button class="btn btn-secondary" onclick="scrollToSection('contact')">
-              Get in Touch
-            </button>
+          <div class="stat-item">
+            <div class="stat-value">7+</div>
+            <div class="stat-label">Certifications</div>
           </div>
         </div>
-        
-        <div class="hero-visual">
-          <div class="profile-card">
-            <div class="profile-image-wrapper">
-              <img src="profile.jpeg" alt="Manoj Somanna" class="profile-image">
-              <div class="profile-ring"></div>
-            </div>
-            <div class="profile-info">
-              <h3>Manoj Somanna</h3>
-              <p>Software Developer | AI/ML Engineer</p>
-              <div class="profile-location">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="2"/>
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                Bengaluru, India
-              </div>
-            </div>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('projects')">View Projects</button>
+          <button class="btn btn-secondary" onclick="scrollToSection('contact')">Get in Touch</button>
+        </div>
+      </div>
+
+      <!-- HERO VISUAL UNCHANGED -->
+      <div class="hero-visual">
+        <div class="profile-card">
+          <div class="profile-image-wrapper">
+            <img src="profile.jpeg" class="profile-image">
+            <div class="profile-ring"></div>
+          </div>
+          <div class="profile-info">
+            <h3>Manoj Somanna</h3>
+            <p>Software Developer | AI/ML Engineer</p>
+            <div class="profile-location">📍 Bengaluru, India</div>
           </div>
         </div>
       </div>
-    </section>
+
+    </div>
+  </section>
+
 
     <!-- ====== ABOUT ====== -->
     <section class="section" id="about">
@@ -1535,14 +1522,14 @@ footer{
     </section>
   </main>
 
-  <!-- ====== FOOTER ====== -->
+  <!-- ========= FOOTER FIXED ========= -->
   <footer>
     <div class="container">
-      <p>My Portfolio • by Manoj Somanna</p>
+      <p>My Portfolio • by Manoj Somanna © <span id="year"></span></p>
     </div>
   </footer>
 
-  <!-- ====== MODALS ====== -->
+  <!-- ========= MODALS ========= -->
   <div id="imageModal" class="modal">
     <span class="modal-close" onclick="closeModal()">&times;</span>
     <img id="modalImage" class="modal-content">
@@ -1551,18 +1538,11 @@ footer{
   <div id="videoModal" class="modal">
     <span class="modal-close" onclick="closeVideo()">&times;</span>
     <div class="video-wrapper">
-      <!-- ✅ CLEAN IFRAME FOR DRIVE PREVIEW -->
-      <iframe
-        id="videoFrame"
-        src=""
-        allow="autoplay; encrypted-media; fullscreen"
-        allowfullscreen
-      ></iframe>
+      <iframe id="videoFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 
   <div id="toast" class="toast"></div>
-
   <script>
 // ========= UPDATE YEAR =========
 document.getElementById('year').textContent = new Date().getFullYear();
